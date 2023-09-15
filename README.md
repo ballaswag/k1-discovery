@@ -6,6 +6,25 @@ This repo contains my learnings of the Creality K1 printer.
 ### USB Boot/Ingenic Cloner to dump/flash internal storage
 See guide here https://github.com/ballaswag/k1-discovery/blob/main/k1-ingenic-cloner-instruction.pdf
 
+K1 default partition offsets. Use these offsets and length limits to read/write to specific partitions in the cloner too.
+```
+GPT Table:                                                                                                                                                                                                                                                            
+-------------
+uboot(gpt/uboot):    Offset 0x000000000, Length 0x0000100000
+ota:                 Offset 0x000100000, Length 0x0000100000
+sn_mac:              Offset 0x000200000, Length 0x0000100000
+rtos:                Offset 0x000300000, Length 0x0000400000
+rtos2:               Offset 0x000700000, Length 0x0000400000
+kernel:              Offset 0x000b00000, Length 0x0000800000
+kernel2:             Offset 0x001300000, Length 0x0000800000
+rootfs:              Offset 0x001b00000, Length 0x0012c00000
+rootfs2:             Offset 0x014700000, Length 0x0012c00000
+rootfs_data:         Offset 0x027300000, Length 0x0006400000
+userdata:            Offset 0x02d700000, Length 0x01a4a00000
+
+Total disk size:0x00000001d2104200, sectors:0x0000000000e90821
+```
+
 USB Boot via SPL/uboot
 * x2000
   - USB ID: a108:eaef
