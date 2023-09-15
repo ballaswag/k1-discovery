@@ -13,13 +13,6 @@ USB Boot via SPL/uboot
   - Stage2: load 0x80100000, exec 0x80100000
 
 
-### Serial Pins
-You can get serial with USB to TTL serial adapt. Pins are pictured below. Baudrate is 115200.
-
-![Serial pinout front](https://github.com/ballaswag/k1-discovery/blob/main/serial_pinout.jpeg)
-![Serial pinout back tx,rx,gnd](https://github.com/ballaswag/k1-discovery/blob/main/serial_pinout_back.jpeg)
-
-
 ## Buildroot/Toolchain (Distribution)
 The board is an Ingenic board and they distribute their variant of Buildroot with prebuilt toolchains. These can be found in ftp.ingenic.com.cn.
 
@@ -57,6 +50,7 @@ Note the Flags field and see GCC doc for detail of each of these flags (https://
 
 For self compiled dynamically linked executable to work with existing libs in /lib /usr/lib in the K1. Buildroot needs to use the same version of glibc as the ones used on the desire K1 firmware. For 1.2.9.22, the glbic version is 2.26. Newer firmware verion uses different version of glibc.
 
+
 ### Using the toolchain
 Will only cover Buildroot and uboot
 
@@ -93,6 +87,12 @@ All the goodies (docs) are here but in Chinese (use google translate if needed):
 https://gitee.com/ingenic-dev/ingenic-linux-docs/tree/ingenic-master/zh-cn/X2000/X2000-halley5
 
 
+### Serial Pins
+You can get serial with USB to TTL serial adapt. Pins are pictured below. Baudrate is 115200.
+
+![Serial pinout front](https://github.com/ballaswag/k1-discovery/blob/main/serial_pinout.jpeg)
+![Serial pinout back tx,rx,gnd](https://github.com/ballaswag/k1-discovery/blob/main/serial_pinout_back.jpeg)
+
 
 ## Misc Guesswork
 The K1 screen is driven by `display-server` (this is likely built using lvgl - https://lvgl.io/). `display-server` drives the display via /dev/fb0. If `Monitor` and `display-server` is killed, you can write random pixels to the screen:
@@ -104,6 +104,7 @@ You can also display any jpeg to the screen using `cmd_jpeg_display`, e.g.
 ```
 cmd_jpeg_display /etc/logo/creality_landscape_rot0_480x800.jpg
 ```
+
 
 ### KlipperScreen
 Building all the dependencies for KlipperScreen, not worth it :), e.g. xserver, gtk3, gobject-introspection, (a opengl lib), mesa, etc. via Buildroot is certainly doable but you will spend a lot time chasing down a working version of various libraries, e.g. librsvg is required by KlipperScreen. Newer librsvg uses rustc which doesn't support MIPS nan2008 (this matters if you want to use shared libs in /lib /usr/lib). The workaround is to pin an earlier version of librsvg in Buildroot that hasn't migrated to rustc. Once that's done you'll still need to workout all the implicit assumptions KlipperScreen makes after the OS, e.g. it expects a debian distrubtion. Might be more worth awhile to adapt KlipperScreen to lvgl or some graphic libraries intended for embedded systems.
