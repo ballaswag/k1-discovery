@@ -56,3 +56,21 @@ ELF Header:
 Note the Flags field and see GCC doc for detail of each of these flags (https://gcc.gnu.org/onlinedocs/gcc/MIPS-Options.html).
 
 For self compiled dynamically linked executable to work with existing libs in /lib /usr/lib in the K1. Buildroot needs to use the same version of glibc as the ones used on the desire K1 firmware. For 1.2.9.22, the glbic version is 2.26. Newer firmware verion uses different version of glibc.
+
+
+## Misc Guesswork
+The K1 screen is driven by `display-server` (this is likely built using lvgl - https://lvgl.io/). `display-server` drives the display via /dev/fb0. If `Monitor` and `display-server` is killed, you can write random pixels to the screen:
+```
+cat /dev/urandom > /dev/fb0
+```
+
+You can also display any jpeg to the screen using `cmd_jpeg_display`, e.g.
+```
+cmd_jpeg_display /etc/logo/creality_landscape_rot0_480x800.jpg
+```
+
+### KlipperScreen
+Building all the dependencies for KlipperScreen, not worth it :), e.g. xserver, gtk3, gobject-introspection, (a opengl lib), mesa, etc. via Buildroot is certainly doable but you will spend a lot time chasing down a working version of various libraries, e.g. librsvg is required by KlipperScreen. Newer librsvg uses rustc which doesn't support MIPS nan2008 (this matters if you want to use shared libs in /lib /usr/lib). The workaround is to pin an earlier version of librsvg in Buildroot that hasn't migrated to rustc. Once that's done you'll still need to workout all the implicit assumptions KlipperScreen makes after the OS, e.g. it expects a debian distrubtion. Might be more worth awhile to adapt KlipperScreen to lvgl or some graphic libraries intended for embedded systems.
+
+
+## prtouch/prtouch_v2
