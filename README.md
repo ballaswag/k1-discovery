@@ -57,6 +57,42 @@ Note the Flags field and see GCC doc for detail of each of these flags (https://
 
 For self compiled dynamically linked executable to work with existing libs in /lib /usr/lib in the K1. Buildroot needs to use the same version of glibc as the ones used on the desire K1 firmware. For 1.2.9.22, the glbic version is 2.26. Newer firmware verion uses different version of glibc.
 
+### Using the toolchain
+Will only cover Buildroot and uboot
+
+Extract archive `07_kernel4.4.94_x2000-sdk_v8.0-20220125` 
+Extract archive `01_Buildroot_dl -> dl`, move `d1` directory into `buildroot`
+
+```
+source build/envsetup.sh
+lunch
+```
+
+select a platform
+
+Buildroot
+```
+make -j$(nproc) buildroot
+```
+
+To customize packages in buildroot
+
+```
+make buildroot-menuconfig
+```
+
+Uboot
+Still doing some work here. The x2000e on the K1 runs LLDDR2, you'll need to open up the platform you configured via `lunch` and comment out other non-LPDDR2 CONFIG, e.g. in `u-boot/include/configs/halley5.h` look for `CONFIG_DDR_TYPE_LPDDR2`, make sure that's defined, and comment out `#define CONFIG_DDR_TYPE_LPDDR3` and other `CONFIG_DDR_TYPE_*`
+```
+make -j$(nproc) uboot
+```
+
+Outputs (executable, libs, uboot, etc) are in `out/product/<platform>/`.
+
+All the goodies (docs) are here but in Chinese (use google translate if needed):
+https://gitee.com/ingenic-dev/ingenic-linux-docs/tree/ingenic-master/zh-cn/X2000/X2000-halley5
+
+
 
 ## Misc Guesswork
 The K1 screen is driven by `display-server` (this is likely built using lvgl - https://lvgl.io/). `display-server` drives the display via /dev/fb0. If `Monitor` and `display-server` is killed, you can write random pixels to the screen:
