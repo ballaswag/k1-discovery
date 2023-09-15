@@ -7,6 +7,8 @@ This repo contains my learnings of the Creality K1 printer.
 See guide here https://github.com/ballaswag/k1-discovery/blob/main/k1-ingenic-cloner-instruction.pdf
 
 K1 default partition offsets. Use these offsets and length limits to read/write to specific partitions in the cloner too.
+
+Please don't use blindly, check your K1 to see your partition layout.
 ```
 GPT Table:                                                                                                                                                                                                                                                            
 -------------
