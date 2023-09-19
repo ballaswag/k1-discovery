@@ -33,6 +33,7 @@ USB Boot via SPL/uboot
   - Stage1: load 0xb2401000, exec 0xb2401800
   - Stage2: load 0x80100000, exec 0x80100000
 
+See https://github.com/ballaswag/ingenic-usbboot/tree/main for booting into uboot with USB Mode.
 
 ## Buildroot/Toolchain (Distribution)
 The board is an Ingenic board and they distribute their variant of Buildroot with prebuilt toolchains. These can be found in ftp.ingenic.com.cn.
@@ -109,7 +110,7 @@ https://gitee.com/ingenic-dev/ingenic-linux-docs/tree/ingenic-master/zh-cn/X2000
 
 
 ### Serial Pins
-You can get serial with USB to TTL serial adapt. Pins are pictured below. Baudrate is 115200.
+You can get serial with USB to TTL serial adapter. Pins are pictured below. Baudrate is 115200.
 
 ![Serial pinout front](https://github.com/ballaswag/k1-discovery/blob/main/serial_pinout.jpeg)
 ![Serial pinout back tx,rx,gnd](https://github.com/ballaswag/k1-discovery/blob/main/serial_pinout_back.jpeg)
