@@ -98,7 +98,7 @@ make buildroot-menuconfig
 ```
 
 ### U-Boot
-See my (usbboot tool)[https://github.com/ballaswag/ingenic-usbboot] for the Creality K1 mainboard.\
+See my [usbboot tool](https://github.com/ballaswag/ingenic-usbboot) for the Creality K1 mainboard.\
 The x2000e on the K1 runs LLDDR2, you'll need to open up the platform you configured via `lunch` and comment out other non-LPDDR2 CONFIG, e.g. in `u-boot/include/configs/halley5.h` look for `CONFIG_DDR_TYPE_LPDDR2`, make sure that's defined, and comment out `#define CONFIG_DDR_TYPE_LPDDR3` and other `CONFIG_DDR_TYPE_*`
 ```
 make -j$(nproc) uboot
