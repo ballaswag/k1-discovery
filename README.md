@@ -1,4 +1,4 @@
-# k1-discovery
+# Creality K1 (Max) Discovery
 
 This repo contains my learnings of the Creality K1 printer.
 
@@ -70,14 +70,14 @@ ELF Header:
 
 Note the Flags field and see GCC doc for detail of each of these flags (https://gcc.gnu.org/onlinedocs/gcc/MIPS-Options.html).
 
-For self compiled dynamically linked executable to work with existing libs in /lib /usr/lib in the K1. Buildroot needs to use the same version of glibc as the ones used on the desire K1 firmware. For 1.2.9.22, the glbic version is 2.26. Newer firmware verion uses different version of glibc.
+For self compiled dynamically linked executable to work with existing libs in /lib /usr/lib in the K1. Buildroot needs to use the same version of glibc as the ones used on the desire K1 firmware. For 1.2.9.22, the glibc version is 2.26. Newer firmware version uses different version of glibc.
 
 
 ### Using the toolchain
 Will only cover Buildroot and uboot
 
-Extract archive `07_kernel4.4.94_x2000-sdk_v8.0-20220125` 
-Extract archive `01_Buildroot_dl -> dl`, move `d1` directory into `buildroot`
+Extract archive `07_kernel4.4.94_x2000-sdk_v8.0-20220125`\
+Extract archive `01_Buildroot_dl -> dl`, move `dl` directory into `buildroot`
 
 ```
 source build/envsetup.sh
@@ -97,8 +97,9 @@ To customize packages in buildroot
 make buildroot-menuconfig
 ```
 
-Uboot
-Still doing some work here. The x2000e on the K1 runs LLDDR2, you'll need to open up the platform you configured via `lunch` and comment out other non-LPDDR2 CONFIG, e.g. in `u-boot/include/configs/halley5.h` look for `CONFIG_DDR_TYPE_LPDDR2`, make sure that's defined, and comment out `#define CONFIG_DDR_TYPE_LPDDR3` and other `CONFIG_DDR_TYPE_*`
+### U-Boot
+See my (usbboot tool)[https://github.com/ballaswag/ingenic-usbboot] for the Creality K1 mainboard.\
+The x2000e on the K1 runs LLDDR2, you'll need to open up the platform you configured via `lunch` and comment out other non-LPDDR2 CONFIG, e.g. in `u-boot/include/configs/halley5.h` look for `CONFIG_DDR_TYPE_LPDDR2`, make sure that's defined, and comment out `#define CONFIG_DDR_TYPE_LPDDR3` and other `CONFIG_DDR_TYPE_*`
 ```
 make -j$(nproc) uboot
 ```
